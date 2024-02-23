@@ -216,6 +216,46 @@ def posting_page_content():
     return post_content
 
 
+def fix_user_data(members, login_data, posts):
+    print('----------------------------------------')
+    print('수정하시려는 데이터를 선택해 주세요')
+    print('1. 이름')
+    print('2. 비밀번호')
+    print('3. 뒤로가기')
+    print('----------------------------------------')
+    choice = input()
+
+    if choice == '1':
+        return 0
+    elif choice == '2':
+        return 0
+    elif choice == '3':
+        return user_page(members, login_data, posts)
+    else:
+        print('없는 기능입니다. 다시 선택해 주세요')
+        return fix_user_data(members, login_data, posts)
+
+
+def fix_user_data_name(members, login_data, posts):
+    print('----------------------------------------')
+    print(f'현재 이름: {login_data.name}')
+    print('바꾸려는 이름을 입력해 주세요')
+    print('----------------------------------------')
+    new_name = input()
+    members[login_data.username] = Member(login_data.name, new_name, login_data.password)
+    return fix_user_data(members, login_data, posts)
+
+
+def fix_user_data_password(members, login_data, posts):
+    print('----------------------------------------')
+    print('바꾸려는 비밀번호를 입력해 주세요')
+    print('----------------------------------------')
+    new_password = input()
+    hash_object = hashlib.sha256(new_password.encode())
+    hex_dig = hash_object.hexdigest()
+    members[login_data.username] = Member(login_data.name, login_data.username, hex_dig)
+    return fix_user_data(members, login_data, posts)
+
 # 관리자 기능
 def admin_func(members, login_data, posts):
     print('----------------------------------------')
