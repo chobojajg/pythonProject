@@ -102,7 +102,7 @@ def user_page(members, login_data, posts):
     print('1. 게시글 보기')
     print('2. 게시글 작성')
     print('3. 내가 쓴글 보기')
-    print('4. 내 정보 수정 - 아직 기능 없음')
+    print('4. 내 정보 수정')
     print('5. 로그아웃')
     if login_data.username == 'admin00001':
         print('6. 관리자 기능')
@@ -117,7 +117,7 @@ def user_page(members, login_data, posts):
     elif choice_user_page == '3':  # 내가 쓴글 보기
         return posting_list(members, login_data, posts, login_data.username)
     elif choice_user_page == '4':  # 내 정보 수정
-        pass
+        return fix_user_data(members, login_data, posts)
     elif choice_user_page == '5':  # 로그아웃
         login_data = []
         return main_menu(members, login_data, posts)
@@ -184,7 +184,7 @@ def posting_page(members, login_data, posts):
         elif select_input == '내용':
             post_content = posting_page_content()
         elif select_input == '저장하기':
-            choice = input('저장하시겠습니까? y/n')
+            choice = input('저장하시겠습니까? y/n').lower()
             if choice == 'y':
                 posts.append(Post(post_title, post_content, login_data.username))
                 break
@@ -226,9 +226,9 @@ def fix_user_data(members, login_data, posts):
     choice = input()
 
     if choice == '1':
-        return 0
+        return fix_user_data_name(members, login_data, posts)
     elif choice == '2':
-        return 0
+        return fix_user_data_password(members, login_data, posts)
     elif choice == '3':
         return user_page(members, login_data, posts)
     else:
@@ -255,6 +255,7 @@ def fix_user_data_password(members, login_data, posts):
     hex_dig = hash_object.hexdigest()
     members[login_data.username] = Member(login_data.name, login_data.username, hex_dig)
     return fix_user_data(members, login_data, posts)
+
 
 # 관리자 기능
 def admin_func(members, login_data, posts):
@@ -285,19 +286,6 @@ def show_user_list_admin(members, login_data, posts):
             continue
         members[i].display()
     return admin_func(members, login_data, posts)
-
-
-def back_main():
-    while (True):
-        re_play_check = input('메인으로 돌아가시겠습니까? (y/n): ')
-
-        if re_play_check == 'y':
-            main_menu(members, login_data, posts)
-        elif re_play_check == 'n':
-            print('프로그램을 종료합니다')
-            sys.exit()
-        else:
-            print("y나 n을 입력해주세요")
 
 
 members = {}

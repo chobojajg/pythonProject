@@ -57,7 +57,7 @@ while(True):
                 break
 
     while (True):
-        re_play_check = input('다시 하시겠습니까? (y/n): ')
+        re_play_check = input('다시 하시겠습니까? (y/n): ').lower()
 
         if re_play_check == 'y':
             break
