@@ -8,8 +8,16 @@ all_history = []
 before_battle = []
 com_rsp_dic: dict = {1: 'r', 2: 's', 3: 'p'}
 
+
 @app.route('/')
 def home():
+    count_list = {'win': before_battle.count('w'), 'lose': before_battle.count('l'), 'draw': before_battle.count('d')}
+
+    return render_template('index.html', all_history=all_history, count_list=count_list)
+
+
+@app.route('/cal_result/')
+def cal_rsp():
     random_num = random.randint(1, 3)
     com_rsp = com_rsp_dic[random_num]
 
@@ -54,11 +62,7 @@ def home():
 
     print(f'승: {before_battle.count('w')} 패: {before_battle.count('l')} 무: {before_battle.count('d')}')
 
-    count_list = {'win': before_battle.count('w'), 'lose': before_battle.count('l'), 'draw': before_battle.count('d')}
-
-    return render_template('index.html', all_history=all_history, count_list=count_list)
-
-    # return redirect(url_for('home'))
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
