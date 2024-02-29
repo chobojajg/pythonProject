@@ -23,7 +23,6 @@ def home():
     per_page = 10
     total = len(all_history)
     pagination = Pagination(page=page, per_page=per_page, total=total, css_framework='bootstrap4')
-
     print(page)
 
     items = get_items(offset=(page - 1) * per_page, per_page=per_page)
